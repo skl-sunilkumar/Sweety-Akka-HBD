@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sweety Akka!</title>
+    <!-- Canvas Confetti Library for Birthday Celebration Effect -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating background decoration */
+        .floating-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bg-item {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.35;
+            animation: float 8s infinite ease-in-out;
+            user-select: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.94);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 480px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-icon {
+            font-size: 3.8rem;
+            margin-bottom: 5px;
+            animation: bounce 2s infinite;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            color: #7b2cbf;
+            font-size: 2.1rem;
+            margin-bottom: 2px;
+        }
+
+        h2 {
+            color: #ff4757;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .message-box {
+            background: #f3e8ff;
+            padding: 18px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #9d4edd;
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #4a148c;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .message-box p {
+            margin-bottom: 10px;
+        }
+
+        .message-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #9d4edd, #7b2cbf);
+            color: white;
+            border: none;
+            padding: 13px 20px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(123, 44, 191, 0.3);
+            outline: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(123, 44, 191, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-pink {
+            background: linear-gradient(135deg, #ff85c0, #ff4d4f);
+            box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3);
+        }
+
+        .btn-pink:hover {
+            box-shadow: 0 6px 16px rgba(255, 77, 79, 0.4);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #ffb199, #ff0844);
+            box-shadow: 0 4px 12px rgba(255, 8, 68, 0.3);
+        }
+
+        .btn-gold:hover {
+            box-shadow: 0 6px 16px rgba(255, 8, 68, 0.4);
+        }
+
+        .surprise-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #fff0f6;
+            border: 1px dashed #ff85c0;
+            animation: popUp 0.4s ease-out;
+            text-align: center;
+        }
+
+        @keyframes popUp {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .surprise-box h3 {
+            color: #c41d7f;
+            margin-bottom: 6px;
+            font-size: 1.1rem;
+        }
+
+        .surprise-box p {
+            font-size: 0.92rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 480px) {
+            .card {
+                padding: 22px 18px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            .btn {
+                font-size: 0.88rem;
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating ghost and heart background elements -->
+    <div class="floating-bg">
+        <div class="bg-item" style="left: 8%; animation-delay: 0s;">👻</div>
+        <div class="bg-item" style="left: 25%; animation-delay: 2s;">💖</div>
+        <div class="bg-item" style="left: 45%; animation-delay: 4s;">✨</div>
+        <div class="bg-item" style="left: 68%; animation-delay: 1s;">👻</div>
+        <div class="bg-item" style="left: 85%; animation-delay: 3s;">🌸</div>
+    </div>
+
+    <div class="card">
+        <div class="header-icon" onclick="triggerConfetti()">👻🎂</div>
+        <h1>Happy Birthday!</h1>
+        <h2>SWEETY AKKA</h2>    
+        <p class="subtitle">Etho ennala mudinja chinna wish...</p>
+
+        <div class="message-box">
+            <p><strong>Hey Sweety akka,</strong></p>
+            <p>You entered my life just a few months ago, but somehow you became an irreplaceable part of my daily routine. From starting the day with a <em>"good morning, have a ghost day!"</em> to wrapping it up with <em>"good night ghost dreams"</em>, I'm so happy for our connection.</p>
+            <p>Wishing you the happiest birthday today! 🌸</p>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn" onclick="toggleSurprise('surprise1')">Tap for a Ghost Wish 👻</button>
+            <button class="btn btn-pink" onclick="toggleSurprise('surprise2')">A Special Note for You & Kutty Preethi 👑</button>
+            <button class="btn btn-gold" onclick="toggleSurprise('surprise3')">Open Pannunga🎁</button>
+        </div>
+
+        <!-- Surprise 1 -->
+        <div id="surprise1" class="surprise-box">
+            <h3>👻 "Ghost Day" Wish!</h3>
+            <p>May your day be filled with hauntingly good vibes, endless laughter, zero stress, and the best memories!</p>
+        </div>
+
+        <!-- Surprise 2 -->
+        <div id="surprise2" class="surprise-box">
+            <h3>👑 For You & Kutty Preethi</h3>
+            <p>Onnum ila enna eluthurathunu theiryala also AI um use panna manasu varala 😅😅.</p>
+        </div>
+
+        <!-- Surprise 3 (NEW) -->
+        <div id="surprise3" class="surprise-box" style="background: #fffbe6; border-color: #ffe58f;">
+            <h3 style="color: #d46b08;">🎁 Special Wish from Heart!</h3>
+            <p>June motham silent ah irundhu, I mean 2 batches ah silent ah irunthuthu approm 3rd batch ku aprom daily pesura oru good friend ah continuous support kudukuradhuku thanks akka! Always stay happy, healthy, and smiling with Kutty Preethi! ✨💖</p><br>
+		<p> Approm naa class join aana time la, promise ah naa paakatha oru situation and depress la irunthen athuku approm konjam konjam ah poitu, okay atha vidunga ka, unga birthday va naa maranthuthen athu true than infact ungaltha naa maraka maten nu nenachen but maranthuthen., 😐 Unga birthday gift ah antha feedback letters eh kudukalam nu irunthen motham ah maranthuthen ellame🤣🤣🤣🤣.... Kutty Preethi Birthday eniku nu solunga naa aniku taren....</p>
+        </div>
+    </div>
+
+    <script>
+        // Trigger celebratory confetti on load
+        window.addEventListener('load', () => {
+            triggerConfetti();
+        });
+
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 70,
+                    spread: 60,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        function toggleSurprise(id) {
+            const surprises = ['surprise1', 'surprise2', 'surprise3'];
+            
+            surprises.forEach(sId => {
+                const el = document.getElementById(sId);
+                if (sId === id) {
+                    if (el.style.display === 'block') {
+                        el.style.display = 'none';
+                    } else {
+                        el.style.display = 'block';
+                        triggerConfetti();
+                    }
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
